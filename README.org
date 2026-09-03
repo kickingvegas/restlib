@@ -14,6 +14,10 @@ NOTE: THIS PROJECT IS WIP.
 
 Refer to the [[https://kickingvegas.github.io/restlib][restlib API reference]] for details.
 
+* Example
+
+Example code using *restlib* can be found in [[file:examples/wttr.el][wttr.el]]. Within that file is the command ~wttr~ which will make an HTTP request to https://wttr.in and display the result in the mini-buffer.
+
 * Feedback
 
 As this project is new, [[https://github.com/kickingvegas/restlib/issues][feedback and suggestions]] are welcome.
