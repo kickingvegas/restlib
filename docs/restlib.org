@@ -6,7 +6,7 @@
 #+EMAIL: kickingvegas@gmail.com
 #+OPTIONS: ':t toc:t author:t email:t H:4 f:t
 #+LANGUAGE: en
-#+MACRO: version 0.0.2
+#+MACRO: version 0.0.3-rc.1
 #+MACRO: kbd (eval (org-texinfo-kbd-macro $1))
 #+TEXINFO_FILENAME: restlib.info
 #+TEXINFO_CLASS: casual
@@ -70,9 +70,18 @@ Network-related functions.
 - Function: restlib-fetch-json URL ::
   - URL: string or URL object
 
-  Synchronous fetch URL that provides a JSON response.
+  Synchronous fetch a URL providing a JSON response.
 
-  The result is the JSON response deserialized into a `hash-table', with JSON ~null~ values converted to ~nil~.
+  The following is done with a URL whose response is in JSON:
+
+  1. Synchronously fetch the URL.
+
+  2. Upon success, deserialize the JSON into an Elisp ~hash-table~, with JSON null values converted to nil.
+
+  3. Return the JSON ~hash-table~ object.
+
+  Any failure in the HTTP request will raise an ~error~ message.
+ 
 
 ** URL Components
 #+VINDEX: restlib-url-parse

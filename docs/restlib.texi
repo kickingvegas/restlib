@@ -20,7 +20,7 @@ Copyright © 2026 Charles Y@. Choi
 @finalout
 @titlepage
 @title restlib API reference
-@subtitle for version 0.0.2
+@subtitle for version 0.0.3-rc.1
 @author Charles Y@. Choi (@email{kickingvegas@@gmail.com})
 @page
 @vskip 0pt plus 1filll
@@ -33,7 +33,7 @@ Copyright © 2026 Charles Y@. Choi
 @node Top
 @top restlib API Reference
 
-Version: 0.0.2
+Version: 0.0.3-rc.1
 
 Copyright © 2026 @w{Charles Y. Choi}
 
@@ -121,9 +121,22 @@ Network-related functions.
 URL: string or URL object
 @end itemize
 
-Synchronous fetch URL that provides a JSON response.
+Synchronous fetch a URL providing a JSON response.
 
-The result is the JSON response deserialized into a `hash-table'@comma{} with JSON @code{null} values converted to @code{nil}.
+The following is done with a URL whose response is in JSON:
+
+@enumerate
+@item
+Synchronously fetch the URL@.
+
+@item
+Upon success@comma{} deserialize the JSON into an Elisp `hash-table'@comma{} with JSON null values converted to nil.
+
+@item
+Return the JSON `hash-table' object.
+@end enumerate
+
+Any failure in the HTTP request will raise an `error' message.
 @end defun
 
 @node URL Components

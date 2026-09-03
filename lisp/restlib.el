@@ -5,7 +5,7 @@
 ;; Author: Charles Y. Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/restlib
 ;; Keywords: tools
-;; Package-Version: 0.0.2
+;; Package-Version: 0.0.3-rc.1
 ;; Package-Requires: ((emacs "30.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -37,12 +37,20 @@
 ;;; Network
 
 (defun restlib-fetch-json (url)
-  "Synchronous fetch URL that provides a JSON response.
+  "Synchronous fetch a URL providing a JSON response.
 
 - URL: string or URL object
 
-The result is the JSON response deserialized into a `hash-table', with
-JSON null values converted to nil."
+The following is done with a URL whose response is in JSON:
+
+1. Synchronously fetch the URL.
+
+2. Upon success, deserialize the JSON into an Elisp `hash-table', with
+JSON null values converted to nil.
+
+3. Return the JSON `hash-table' object.
+
+Any failure in the HTTP request will raise an `error' message."
   (let ((data-buffer (url-retrieve-synchronously url)))
     (if (not data-buffer)
         (error "Failed to fetch data from %s" url)
