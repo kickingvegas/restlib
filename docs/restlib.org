@@ -6,7 +6,7 @@
 #+EMAIL: kickingvegas@gmail.com
 #+OPTIONS: ':t toc:t author:t email:t H:4 f:t
 #+LANGUAGE: en
-#+MACRO: version 0.0.2-rc.1-rc.1
+#+MACRO: version 0.0.2-rc.2-rc.1
 #+MACRO: kbd (eval (org-texinfo-kbd-macro $1))
 #+TEXINFO_FILENAME: restlib.info
 #+TEXINFO_CLASS: casual
@@ -145,6 +145,10 @@ JSON-related functions. For more information on JSON objects, refer to the [[inf
 
   Convert empty string value for KEY to nil in OBJ.
 
+* Example
+#+CINDEX: Example
+
+Example code using *restlib* can be found in [[https://github.com/kickingvegas/restlib/tree/main/examples/wttr.el][wttr.el]]. Within that file is the command ~wttr~ which will make an HTTP request to https://wttr.in and display the result in the mini-buffer.
 
 * Feedback & Discussion
 #+CINDEX: Feedback
