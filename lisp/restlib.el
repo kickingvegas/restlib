@@ -60,11 +60,11 @@ JSON null values converted to nil."
 ;;; URL Components
 
 (defun restlib-url-add-query-items (url items &optional obj-result)
-  "Add query ITEMS to URL and return string.
+  "Add query ITEMS to URL.
 
 - URL: string or URL object
 - ITEMS: list of lists as specified for `url-build-query-string'
-- OBJ-RESULT: if non-nil then return URL object
+- OBJ-RESULT: if non-nil then return URL object, else string
 
 If URL has an existing query fragment, then ITEMS will be naively
 appended to it, with no regard for duplicate keys."

@@ -199,10 +199,10 @@ URL: string or URL object
 @item
 ITEMS: list of lists as specified for @code{url-build-query-string}
 @item
-OBJ-RESULT: if non-nil then return URL object
+OBJ-RESULT: if non-nil then return URL object@comma{} else string
 @end itemize
 
-Add query ITEMS to URL and return string.
+Add query ITEMS to URL@.
 
 If URL has an existing query fragment@comma{} then ITEMS will be naively appended to it@comma{} with no regard for duplicate keys.
 @end defun
