@@ -1,0 +1,282 @@
+\input texinfo    @c -*- texinfo -*-
+@c %**start of header
+@setfilename restlib.info
+@settitle restlib User Guide
+@documentencoding UTF-8
+@documentlanguage en
+@syncodeindex pg cp
+@paragraphindent none
+@c %**end of header
+
+@copying
+Copyright © 2026 Charles Y@. Choi
+@end copying
+
+@dircategory Emacs misc features
+@direntry
+* restlib: (restlib).   A.
+@end direntry
+
+@finalout
+@titlepage
+@title restlib User Guide
+@subtitle for version 0.0.0
+@author Charles Y@. Choi (@email{kickingvegas@@gmail.com})
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top restlib User Guide
+
+Version: 0.0.0
+
+Copyright © 2026 @w{Charles Y. Choi}
+
+@strong{restlib} is a library to support building REST clients in GNU Emacs.
+
+If you enjoy using restlib@comma{} please consider buying me a coffee to help support its development and maintenance.
+
+@image{images/default-yellow,,,,png}
+
+@uref{https://www.buymeacoffee.com/kickingvegas}
+
+@end ifnottex
+
+@menu
+* Requirements::
+* API::
+* Feedback & Discussion::
+* Sponsorship::
+* About::
+* Acknowledgments::
+* Main Index::
+* Variable Index::
+
+@detailmenu
+--- The Detailed Node Listing ---
+
+API
+
+* Network::
+* URL Components::
+* JSON::
+
+@end detailmenu
+@end menu
+
+@node Requirements
+@chapter Requirements
+
+@cindex Requirements
+
+@itemize
+@item
+@uref{https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html, GNU Emacs} 30.1+
+@end itemize
+
+@strong{restlib} has been verified with the following configuration:
+
+@itemize
+@item
+GNU Emacs 31.1 (macOS 15.7@comma{} Ubuntu Linux 22.04.5 LTS)
+@end itemize
+
+@node API
+@chapter API
+
+@cindex API
+@vindex restlib
+
+To use @strong{restlib}@comma{} include it in your code using the @code{require} function:
+
+@lisp
+(require 'restlib)
+@end lisp
+
+
+The @strong{restlib} library is organized into sections listed below:
+
+@menu
+* Network::
+* URL Components::
+* JSON::
+@end menu
+
+@node Network
+@section Network
+
+@vindex restlib-fetch-json
+
+Network-related functions.
+
+@defun restlib-fetch-json URL
+@itemize
+@item
+URL: string or URL object
+@end itemize
+
+Synchronous fetch URL that provides a JSON response.
+
+The result is the JSON response deserialized into a `hash-table'@comma{} with JSON @code{null} values converted to @code{nil}.
+@end defun
+
+@node URL Components
+@section URL Components
+
+@vindex restlib-url-parse
+@vindex restlib-url-filename
+@vindex restlib-url-path
+@vindex restlib-url-query
+@vindex restlib-url-query-items
+@vindex restlib-url-add-query-items
+@vindex restlib-url-remove-query
+
+
+URL-related functions. For more information on URL objects refer to the @ref{Top,URL manual,,url,}.
+
+@defun restlib-url-parse URL
+@itemize
+@item
+URL: string
+@end itemize
+
+Convenience function to return a parsed object given URL string.
+@end defun
+
+@defun restlib-url-filename URL
+@itemize
+@item
+URL: string or URL object
+@end itemize
+
+Get URL filename.
+@end defun
+
+@defun restlib-url-path URL
+@itemize
+@item
+URL: string or URL object
+@end itemize
+
+Get URL path.
+@end defun
+
+@defun restlib-url-query URL
+@itemize
+@item
+URL: string or URL object
+@end itemize
+
+Get URL query.
+@end defun
+
+@defun restlib-url-query-items URL
+@itemize
+@item
+URL: string or URL object
+@end itemize
+
+Extract query items from URL@.
+@end defun
+
+@defun restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT
+@itemize
+@item
+URL: string or URL object
+@item
+ITEMS: list of lists as specified for @code{url-build-query-string}
+@item
+OBJ-RESULT: if non-nil then return URL object
+@end itemize
+
+Add query ITEMS to URL and return string.
+@end defun
+
+@defun restlib-url-remove-query URL &optional OBJ-RESULT
+@itemize
+@item
+URL: string or URL object
+@item
+OBJ-RESULT: if non-nil then return URL object
+@end itemize
+
+Remove query from URL@.
+@end defun
+
+@node JSON
+@section JSON
+
+@vindex restlib-json-empty-string-to-nil
+
+JSON-related functions. For more information on JSON objects@comma{} refer to the @ref{Parsing JSON,Parsing JSON section of the Elisp manual,,elisp,}.
+
+@table @asis
+@item restlib-json-empty-string-to-nil OBJ KEY
+@itemize
+@item
+OBJ: map-type object (typically a @code{hash-table})
+@item
+KEY: key
+@end itemize
+
+Convert empty string value for KEY to nil in OBJ@.
+@end table
+
+@node Feedback & Discussion
+@chapter Feedback & Discussion
+
+@cindex Feedback
+Please report any feedback about @strong{restlib} to the @uref{https://github.com/kickingvegas/restlib/issues, issue tracker on GitHub}.
+
+@cindex Discussion
+To participate in general discussion about using @strong{restlib}@comma{} please join the @uref{https://github.com/kickingvegas/restlib/discussions, discussion group}.
+
+@node Sponsorship
+@chapter Sponsorship
+
+@cindex Sponsorship
+
+If you enjoy using restlib@comma{} please consider buying me a coffee to help support its development and maintenance.
+
+@image{images/default-yellow,,,,png}
+
+@uref{https://www.buymeacoffee.com/kickingvegas}
+
+@node About
+@chapter About
+
+@cindex About
+
+@uref{https://github.com/kickingvegas/restlib, restlib} was conceived and crafted by Charles Y@. Choi in San Francisco@comma{} California.
+
+Thank you for using @strong{restlib}.
+
+Always choose love.
+
+@node Acknowledgments
+@chapter Acknowledgments
+
+@cindex Acknowledgments
+
+Thanks goes out to the contributors to GNU Emacs@comma{} whose work this package builds upon.
+
+@node Main Index
+@chapter Main Index
+
+Index for this user guide.
+
+@printindex cp
+
+@node Variable Index
+@chapter Variable Index
+
+Variables@comma{} functions@comma{} commands@comma{} and menus referenced by this user guide.
+
+@printindex vr
+
+@bye
