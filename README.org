@@ -12,7 +12,7 @@ NOTE: THIS PROJECT IS WIP.
 
 * API
 
-Refer to the [[https://kickingvegas.github.io/restlib][*restlib* API reference]] for details.
+Refer to the [[https://kickingvegas.github.io/restlib][restlib API reference]] for details.
 
 * Sponsorship
 

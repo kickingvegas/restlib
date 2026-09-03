@@ -40,25 +40,55 @@
 
 
 (ert-deftest test-restlib-url-add-query-items ()
-  "Test for `restlib-url-add-query-items'.")
+  "Test for `restlib-url-add-query-items'."
+
+  (let* ((testURL "https://heythey.com/bingsu#wat")
+         (url-obj (restlib-url-parse testURL))
+         (items '(("a" "b")
+                  ("c" "d")))
+         (control "https://heythey.com/bingsu?a=b&c=d#wat"))
+
+    (should (string-equal (restlib-url-add-query-items url-obj items)
+                          control))))
 
 (ert-deftest test-restlib-url-filename ()
-  "Test for `restlib-url-filename'.")
+  "Test for `restlib-url-filename'."
+  (let ((testURL "https://heythey.com/bingsu?a=b#wat"))
+    (should (string-equal (restlib-url-filename testURL) "/bingsu?a=b"))))
 
 (ert-deftest test-restlib-url-path ()
-  "Test for `restlib-url-path'.")
+  "Test for `restlib-url-path'."
+  (let ((testURL "https://heythey.com/bingsu/gothere?a=b#wat"))
+    (should (string-equal (restlib-url-path testURL) "/bingsu/gothere"))))
 
 (ert-deftest test-restlib-url-query ()
-  "Test for `restlib-url-query'.")
+  "Test for `restlib-url-query'."
+  (let ((testURL "https://heythey.com/bingsu/gothere?a=b#wat"))
+    (should (string-equal (restlib-url-query testURL) "a=b"))))
 
 (ert-deftest test-restlib-url-query-items ()
-  "Test for `restlib-url-query-items'.")
+  "Test for `restlib-url-query-items'."
+  (let ((testURL "https://heythey.com/bingsu/gothere?a=b#wat"))
+    (should (equal (restlib-url-query-items testURL) '(("a" "b"))))))
 
 (ert-deftest test-restlib-url-remove-query ()
-  "Test for `restlib-url-remove-query'.")
+  "Test for `restlib-url-remove-query'."
+
+  (let ((testURL "https://heythey.com/bingsu/gothere?a=b#wat")
+        (control "https://heythey.com/bingsu/gothere#wat"))
+    (should (string-equal (restlib-url-remove-query testURL) control))))
 
 (ert-deftest test-restlib-json-empty-string-to-nil ()
-  "Test for `restlib-json-empty-string-to-nil'.")
+  "Test for `restlib-json-empty-string-to-nil'."
+
+  (let* ((json-example "{ \"foo\" : \"mary\", \"bar\" : \"\" }")
+         (json-obj (json-parse-string json-example
+                                 :object-type 'hash-table
+                                 :null-object nil)))
+
+    (should (string-equal (map-elt json-obj "bar") ""))
+    (restlib-json-empty-string-to-nil json-obj "bar")
+    (should (not (map-elt json-obj "bar")))))
 
 
 (provide 'test-restlib)

@@ -1,6 +1,6 @@
 #+startup: overview nologdone
 #+startup: showeverything
-#+TITLE: restlib User Guide
+#+TITLE: restlib API Reference
 #+SUBTITLE: for version {{{version}}}
 #+AUTHOR: Charles Y. Choi
 #+EMAIL: kickingvegas@gmail.com
@@ -96,20 +96,28 @@ URL-related functions. For more information on URL objects refer to the [[info:u
 
   Get URL filename.
 
+  Extract filename via ~url-filename~.
+
 - Function: restlib-url-path URL ::
   - URL: string or URL object
 
   Get URL path.
+
+  Extract only path from URL, omitting query parameters and fragment.
 
 - Function: restlib-url-query URL ::
   - URL: string or URL object
 
   Get URL query.
 
+  Extract query as string from URL.
+
 - Function: restlib-url-query-items URL ::
   - URL: string or URL object
 
   Extract query items from URL.
+
+  Extract query items using ~url-parse-query-string~.
 
 - Function: restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT ::
   - URL: string or URL object
@@ -117,6 +125,8 @@ URL-related functions. For more information on URL objects refer to the [[info:u
   - OBJ-RESULT: if non-nil then return URL object
 
   Add query ITEMS to URL and return string.
+
+  If URL has an existing query fragment, then ITEMS will be naively appended to it, with no regard for duplicate keys.
 
 - Function: restlib-url-remove-query URL &optional OBJ-RESULT ::
   - URL: string or URL object
