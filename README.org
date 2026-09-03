@@ -1,4 +1,26 @@
-* restlib.el
+# [[https://melpa.org/#/restlib][file:https://melpa.org/packages/restlib-badge.svg]] [[https://stable.melpa.org/#/restlib][file:https://stable.melpa.org/packages/restlib-badge.svg]]
 
-WIP
+* restlib
 
+NOTE: THIS PROJECT IS WIP.
+
+*restlib* is a utility library to support building REST clients in GNU Emacs.
+
+* Requirements
+
+*restlib* requires GNU Emacs 30.1.
+
+* API
+
+Refer to the [[https://kickingvegas.github.io/restlib][*restlib* API reference]] for details.
+
+* Sponsorship
+
+If you enjoy using *restlib*, please consider buying me a coffee to help support its development and maintenance.
+
+[[file:docs/images/default-yellow.png]]
+
+  
+* Acknowledgments
+
+A heartfelt thanks to all the contributors to the GNU Emacs ecosystem from which *restlib* builds from. This work would not be possible without your efforts.
