@@ -5,7 +5,7 @@
 ;; Author: Charles Y. Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/restlib
 ;; Keywords: tools
-;; Project-Version: 0.0.0
+;; Package-Version: 0.0.1
 ;; Package-Requires: ((emacs "30.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -97,14 +97,18 @@ appended to it, with no regard for duplicate keys."
 (defun restlib-url-filename (url)
   "Get URL filename.
 
-- URL: string or URL object"
+- URL: string or URL object
+
+Extract filename via `url-filename'."
   (let ((url (restlib-url-parse url)))
     (url-filename url)))
 
 (defun restlib-url-path (url)
   "Get URL path.
 
-- URL: string or URL object"
+- URL: string or URL object
+
+Extract only path from URL, omitting query parameters and fragment."
   (let* ((filename (restlib-url-filename url))
          (has-query (string-search "?" filename)))
     (if has-query
@@ -114,7 +118,9 @@ appended to it, with no regard for duplicate keys."
 (defun restlib-url-query (url)
   "Get URL query.
 
-- URL: string or URL object"
+- URL: string or URL object
+
+Extract query as string from URL."
   (let* ((filename (restlib-url-filename url))
          (has-query (string-search "?" filename)))
     (if has-query
@@ -123,7 +129,9 @@ appended to it, with no regard for duplicate keys."
 (defun restlib-url-query-items (url)
   "Extract query items from URL.
 
-- URL: string or URL object"
+- URL: string or URL object
+
+Extract query items using `url-parse-query-string'."
   (let ((query (restlib-url-query url)))
     (if query
         (url-parse-query-string query))))
