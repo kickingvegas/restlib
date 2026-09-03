@@ -1,0 +1,178 @@
+#+startup: overview nologdone
+#+startup: showeverything
+#+TITLE: restlib User Guide
+#+SUBTITLE: for version {{{version}}}
+#+AUTHOR: Charles Y. Choi
+#+EMAIL: kickingvegas@gmail.com
+#+OPTIONS: ':t toc:t author:t email:t H:4 f:t
+#+LANGUAGE: en
+#+MACRO: version 0.0.0
+#+MACRO: kbd (eval (org-texinfo-kbd-macro $1))
+#+TEXINFO_FILENAME: restlib.info
+#+TEXINFO_CLASS: casual
+#+TEXINFO_HEADER: @syncodeindex pg cp
+#+TEXINFO_HEADER: @paragraphindent none
+#+TEXINFO_TITLEPAGE: t
+#+TEXINFO_DIR_CATEGORY: Emacs misc features
+#+TEXINFO_DIR_NAME: restlib
+#+TEXINFO_DIR_DESC: Utility library for building REST clients.
+#+TEXINFO_PRINTED_TITLE: restlib API reference
+
+Version: {{{version}}}
+
+#+TEXINFO: Copyright © 2026 @w{Charles Y. Choi}
+
+*restlib* is a utility library to support building REST clients in GNU Emacs.
+
+#+INCLUDE: "./sponsorship.org"
+
+* Copying
+:PROPERTIES:
+:COPYING: t
+:END:
+
+Copyright © 2026 Charles Y. Choi
+
+* Requirements
+:PROPERTIES:
+:CUSTOM_ID: requirements
+:END:
+#+CINDEX: Requirements
+
+- [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][GNU Emacs]] 30.1+
+
+*restlib* has been verified with the following configuration:
+
+- GNU Emacs 31.1 (macOS 15.7, Ubuntu Linux 22.04.5 LTS)
+
+* API
+:PROPERTIES:
+:CUSTOM_ID: api
+:END:
+#+CINDEX: API
+#+VINDEX: restlib
+
+To use *restlib*, include it in your code using the ~require~ function:
+
+#+begin_src elisp :lexical no
+  (require 'restlib)
+#+end_src
+
+
+The *restlib* library is organized into sections listed below:
+
+
+** Network
+#+VINDEX: restlib-fetch-json
+
+Network-related functions.
+
+- Function: restlib-fetch-json URL ::
+  - URL: string or URL object
+
+  Synchronous fetch URL that provides a JSON response.
+
+  The result is the JSON response deserialized into a `hash-table', with JSON ~null~ values converted to ~nil~.
+
+** URL Components
+#+VINDEX: restlib-url-parse
+#+VINDEX: restlib-url-filename
+#+VINDEX: restlib-url-path
+#+VINDEX: restlib-url-query
+#+VINDEX: restlib-url-query-items
+#+VINDEX: restlib-url-add-query-items
+#+VINDEX: restlib-url-remove-query
+
+
+URL-related functions. For more information on URL objects refer to the [[info:url#Top][URL manual]].
+
+- Function: restlib-url-parse URL ::
+    - URL: string
+
+  Convenience function to return a parsed object given URL string.
+
+- Function: restlib-url-filename URL ::
+    - URL: string or URL object
+
+  Get URL filename.
+
+- Function: restlib-url-path URL ::
+  - URL: string or URL object
+
+  Get URL path.
+
+- Function: restlib-url-query URL ::
+  - URL: string or URL object
+
+  Get URL query.
+
+- Function: restlib-url-query-items URL ::
+  - URL: string or URL object
+
+  Extract query items from URL.
+
+- Function: restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT ::
+  - URL: string or URL object
+  - ITEMS: list of lists as specified for ~url-build-query-string~
+  - OBJ-RESULT: if non-nil then return URL object
+
+  Add query ITEMS to URL and return string.
+
+- Function: restlib-url-remove-query URL &optional OBJ-RESULT ::
+  - URL: string or URL object
+  - OBJ-RESULT: if non-nil then return URL object
+
+  Remove query from URL.
+
+** JSON
+#+VINDEX: restlib-json-empty-string-to-nil
+
+JSON-related functions. For more information on JSON objects, refer to the [[info:elisp#Parsing JSON][Parsing JSON section of the Elisp manual]].
+
+- restlib-json-empty-string-to-nil OBJ KEY ::
+  - OBJ: map-type object (typically a ~hash-table~)
+  - KEY: key
+
+  Convert empty string value for KEY to nil in OBJ.
+
+
+* Feedback & Discussion
+#+CINDEX: Feedback
+Please report any feedback about *restlib* to the [[https://github.com/kickingvegas/restlib/issues][issue tracker on GitHub]].
+
+#+CINDEX: Discussion
+To participate in general discussion about using *restlib*, please join the [[https://github.com/kickingvegas/restlib/discussions][discussion group]].
+
+* Sponsorship
+#+CINDEX: Sponsorship
+
+#+INCLUDE: "./sponsorship.org"
+
+
+* About
+#+CINDEX: About
+
+[[https://github.com/kickingvegas/restlib][restlib]] was conceived and crafted by Charles Y. Choi in San Francisco, California.
+
+Thank you for using *restlib*.
+
+Always choose love.
+
+* Acknowledgments
+#+CINDEX: Acknowledgments
+
+Thanks goes out to the contributors to GNU Emacs, whose work this package builds upon.
+
+* Main Index
+:PROPERTIES:
+:INDEX:    cp
+:END:
+
+Index for this user guide.
+
+* Variable Index
+:PROPERTIES:
+:INDEX:    vr
+:END:
+
+Variables, functions, commands, and menus referenced by this user guide.
