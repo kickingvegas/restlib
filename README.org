@@ -14,13 +14,17 @@ NOTE: THIS PROJECT IS WIP.
 
 Refer to the [[https://kickingvegas.github.io/restlib][restlib API reference]] for details.
 
+* Feedback
+
+As this project is new, [[https://github.com/kickingvegas/restlib/issues][feedback and suggestions]] are welcome.
+
 * Sponsorship
 
 If you enjoy using *restlib*, please consider buying me a coffee to help support its development and maintenance.
 
 [[file:docs/images/default-yellow.png]]
 
-  
+
 * Acknowledgments
 
 A heartfelt thanks to all the contributors to the GNU Emacs ecosystem from which *restlib* builds from. This work would not be possible without your efforts.
