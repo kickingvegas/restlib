@@ -148,7 +148,7 @@ URL-related functions. For more information on URL objects refer to the [[info:u
 
 JSON-related functions. For more information on JSON objects, refer to the [[info:elisp#Parsing JSON][Parsing JSON section of the Elisp manual]].
 
-- restlib-json-empty-string-to-nil OBJ KEY ::
+- Function: restlib-json-empty-string-to-nil OBJ KEY ::
   - OBJ: map-type object (typically a ~hash-table~)
   - KEY: key
 

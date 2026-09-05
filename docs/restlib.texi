@@ -239,8 +239,7 @@ Remove query from URL@.
 
 JSON-related functions. For more information on JSON objects@comma{} refer to the @ref{Parsing JSON,Parsing JSON section of the Elisp manual,,elisp,}.
 
-@table @asis
-@item restlib-json-empty-string-to-nil OBJ KEY
+@defun restlib-json-empty-string-to-nil OBJ KEY
 @itemize
 @item
 OBJ: map-type object (typically a @code{hash-table})
@@ -249,7 +248,7 @@ KEY: key
 @end itemize
 
 Convert empty string value for KEY to nil in OBJ@.
-@end table
+@end defun
 
 @node Example
 @chapter Example
