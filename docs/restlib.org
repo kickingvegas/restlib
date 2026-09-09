@@ -24,6 +24,13 @@ Version: {{{version}}}
 
 *restlib* is a utility library to support building REST clients in GNU Emacs.
 
+The functions provided by *restlib* are organized into the following areas:
+
+- Network communication
+- URL components
+- JSON handling
+
+
 #+INCLUDE: "./sponsorship.org"
 
 * Copying
@@ -70,7 +77,7 @@ Network-related functions.
 - Function: restlib-fetch-json URL ::
   - URL: string or URL object
 
-  Synchronous fetch a URL providing a JSON response.
+  Synchronously fetch the URL returning a deserialized JSON response.
 
   The following is done with a URL whose response is in JSON:
 
@@ -80,8 +87,14 @@ Network-related functions.
 
   3. Return the JSON ~hash-table~ object.
 
-  Any failure in the HTTP request will raise an ~error~ message.
- 
+  Any failure in the HTTP request will raise an ~error~ message. Refer to Emacs Lisp Reference Manual for guidance on handling this condition ([[info:elisp#Handling Errors]]).
+
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-fetch-json "https://wttr.in/?0&format=j1")
+  #+end_src
+
 
 ** URL Components
 #+VINDEX: restlib-url-parse
@@ -92,13 +105,14 @@ Network-related functions.
 #+VINDEX: restlib-url-add-query-items
 #+VINDEX: restlib-url-remove-query
 
-
 URL-related functions. For more information on URL objects refer to the [[info:url#Top][URL manual]].
 
 - Function: restlib-url-parse URL ::
-    - URL: string
+    - URL: string or URL object
 
   Convenience function to return a parsed object given URL string.
+
+  If the URL is already a parsed object then it will pass through.
 
 - Function: restlib-url-filename URL ::
     - URL: string or URL object
@@ -107,12 +121,36 @@ URL-related functions. For more information on URL objects refer to the [[info:u
 
   Extract filename via ~url-filename~.
 
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-filename "https://heythey.com/mary?a=b&c=d%2Ce")
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   "/mary?a=b&c=d%2Ce"
+  #+end_example
+
 - Function: restlib-url-path URL ::
   - URL: string or URL object
 
   Get URL path.
 
   Extract only path from URL, omitting query parameters and fragment.
+
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-path "https://heythey.com/mary?a=b&c=d%2Ce")
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   "/mary"
+  #+end_example
 
 - Function: restlib-url-query URL ::
   - URL: string or URL object
@@ -121,6 +159,19 @@ URL-related functions. For more information on URL objects refer to the [[info:u
 
   Extract query as string from URL.
 
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-query "https://heythey.com/mary?a=b&c=d%2Ce")
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   "a=b&c=d%20e"
+  #+end_example
+
+
 - Function: restlib-url-query-items URL ::
   - URL: string or URL object
 
@@ -128,20 +179,65 @@ URL-related functions. For more information on URL objects refer to the [[info:u
 
   Extract query items using ~url-parse-query-string~.
 
-- Function: restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT ::
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-query-items "https://heythey.com/mary?a=b&c=d%2Ce")
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   (("c" "d,e") ("a" "b"))
+  #+end_example
+
+
+- Function: restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT SEMICOLONS KEEP-EMPTY ::
   - URL: string or URL object
   - ITEMS: list of lists as specified for ~url-build-query-string~
   - OBJ-RESULT: if non-nil then return URL object, else string
+  - SEMICOLONS: if non-nil then use ‘;’ as separator
+  - KEEP-EMPTY: if non-nil then render ‘key=’ instead of ‘key’
 
   Add query ITEMS to URL.
 
   If URL has an existing query fragment, then ITEMS will be naively appended to it, with no regard for duplicate keys.
+
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-add-query-items
+     "https://heythey.com/mary?a=b&c=d%2Ce"
+     '(("f" "j")))
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   "https://heythey.com/mary?c=d,e&a=b&f=j"
+  #+end_example
+
+
+
 
 - Function: restlib-url-remove-query URL &optional OBJ-RESULT ::
   - URL: string or URL object
   - OBJ-RESULT: if non-nil then return URL object
 
   Remove query from URL.
+
+  Example:
+
+  #+begin_src elisp :lexical no
+    (restlib-url-remove-query "https://heythey.com/mary?a=b&c=d%2Ce")
+  #+end_src
+
+  Result:
+
+  #+begin_example
+   "https://heythey.com/mary"
+  #+end_example
+
 
 ** JSON
 #+VINDEX: restlib-json-empty-string-to-nil

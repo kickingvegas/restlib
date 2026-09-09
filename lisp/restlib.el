@@ -23,7 +23,15 @@
 
 ;;; Commentary:
 
-;; TBD
+;; restlib is a utility library to support building REST clients in GNU Emacs.
+
+;; The functions provided by restlib are organized into the following areas:
+
+;; - Network communication
+;; - URL components
+;; - JSON handling
+
+;; Refer to the info “restlib API Reference” for more information.
 
 ;;; Code:
 
@@ -37,7 +45,7 @@
 ;;; Network
 
 (defun restlib-fetch-json (url)
-  "Synchronous fetch a URL providing a JSON response.
+  "Synchronously fetch the URL returning a deserialized JSON response.
 
 - URL: string or URL object
 
@@ -50,7 +58,9 @@ JSON null values converted to nil.
 
 3. Return the JSON `hash-table' object.
 
-Any failure in the HTTP request will raise an `error' message."
+Any failure in the HTTP request will raise an `error' message. Refer to
+the Info node `(elisp) Handling Errors' for guidance on handling this
+condition."
   (let ((data-buffer (url-retrieve-synchronously url)))
     (if (not data-buffer)
         (error "Failed to fetch data from %s" url)
@@ -67,12 +77,17 @@ Any failure in the HTTP request will raise an `error' message."
 
 ;;; URL Components
 
-(defun restlib-url-add-query-items (url items &optional obj-result)
+(defun restlib-url-add-query-items (url items &optional obj-result semicolons keep-empty)
   "Add query ITEMS to URL.
 
 - URL: string or URL object
 - ITEMS: list of lists as specified for `url-build-query-string'
 - OBJ-RESULT: if non-nil then return URL object, else string
+- SEMICOLONS: if non-nil then use ‘;’ as separator
+- KEEP-EMPTY: if non-nil then render ‘key=’ instead of ‘key’
+
+In ITEMS, values are expected to not be URL encoded as
+`url-build-query-string' will do the encoding.
 
 If URL has an existing query fragment, then ITEMS will be naively
 appended to it, with no regard for duplicate keys."
@@ -82,7 +97,7 @@ appended to it, with no regard for duplicate keys."
          (items (if old-items
                     (append old-items items)
                   items))
-         (query (url-build-query-string items))
+         (query (url-build-query-string items semicolons keep-empty))
          (url (restlib-url-remove-query url t))
          (filename (url-filename url))
          (new-filename (if filename
@@ -97,7 +112,9 @@ appended to it, with no regard for duplicate keys."
 (defun restlib-url-parse (url)
   "Convenience function to return a parsed object given URL string.
 
-- URL: string"
+- URL: string or URL object
+
+If the URL is already a parsed object then it will pass through."
   (if (stringp url)
       (url-generic-parse-url url)
     url))
