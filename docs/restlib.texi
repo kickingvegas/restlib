@@ -20,7 +20,7 @@ Copyright © 2026 Charles Y@. Choi
 @finalout
 @titlepage
 @title restlib API reference
-@subtitle for version 0.0.3
+@subtitle for version 0.0.4-rc.1
 @author Charles Y@. Choi (@email{kickingvegas@@gmail.com})
 @page
 @vskip 0pt plus 1filll
@@ -33,11 +33,23 @@ Copyright © 2026 Charles Y@. Choi
 @node Top
 @top restlib API Reference
 
-Version: 0.0.3
+Version: 0.0.4-rc.1
 
 Copyright © 2026 @w{Charles Y. Choi}
 
 @strong{restlib} is a utility library to support building REST clients in GNU Emacs.
+
+The functions provided by @strong{restlib} are organized into the following areas:
+
+@itemize
+@item
+Network communication
+@item
+URL components
+@item
+JSON handling
+@end itemize
+
 
 If you enjoy using restlib@comma{} please consider buying me a coffee to help support its development and maintenance.
 
@@ -121,7 +133,7 @@ Network-related functions.
 URL: string or URL object
 @end itemize
 
-Synchronous fetch a URL providing a JSON response.
+Synchronously fetch the URL returning a deserialized JSON response.
 
 The following is done with a URL whose response is in JSON:
 
@@ -136,7 +148,13 @@ Upon success@comma{} deserialize the JSON into an Elisp @code{hash-table}@comma{
 Return the JSON @code{hash-table} object.
 @end enumerate
 
-Any failure in the HTTP request will raise an @code{error} message.
+Any failure in the HTTP request will raise an @code{error} message. Refer to Emacs Lisp Reference Manual for guidance on handling this condition (@ref{Handling Errors,,,elisp,}).
+
+Example:
+
+@lisp
+(restlib-fetch-json "https://wttr.in/?0&format=j1")
+@end lisp
 @end defun
 
 @node URL Components
@@ -150,16 +168,17 @@ Any failure in the HTTP request will raise an @code{error} message.
 @vindex restlib-url-add-query-items
 @vindex restlib-url-remove-query
 
-
 URL-related functions. For more information on URL objects refer to the @ref{Top,URL manual,,url,}.
 
 @defun restlib-url-parse URL
 @itemize
 @item
-URL: string
+URL: string or URL object
 @end itemize
 
 Convenience function to return a parsed object given URL string.
+
+If the URL is already a parsed object then it will pass through.
 @end defun
 
 @defun restlib-url-filename URL
@@ -171,6 +190,18 @@ URL: string or URL object
 Get URL filename.
 
 Extract filename via @code{url-filename}.
+
+Example:
+
+@lisp
+(restlib-url-filename "https://heythey.com/mary?a=b&c=d%2Ce")
+@end lisp
+
+Result:
+
+@example
+"/mary?a=b&c=d%2Ce"
+@end example
 @end defun
 
 @defun restlib-url-path URL
@@ -182,6 +213,18 @@ URL: string or URL object
 Get URL path.
 
 Extract only path from URL@comma{} omitting query parameters and fragment.
+
+Example:
+
+@lisp
+(restlib-url-path "https://heythey.com/mary?a=b&c=d%2Ce")
+@end lisp
+
+Result:
+
+@example
+"/mary"
+@end example
 @end defun
 
 @defun restlib-url-query URL
@@ -193,6 +236,18 @@ URL: string or URL object
 Get URL query.
 
 Extract query as string from URL@.
+
+Example:
+
+@lisp
+(restlib-url-query "https://heythey.com/mary?a=b&c=d%2Ce")
+@end lisp
+
+Result:
+
+@example
+"a=b&c=d%20e"
+@end example
 @end defun
 
 @defun restlib-url-query-items URL
@@ -204,9 +259,21 @@ URL: string or URL object
 Extract query items from URL@.
 
 Extract query items using @code{url-parse-query-string}.
+
+Example:
+
+@lisp
+(restlib-url-query-items "https://heythey.com/mary?a=b&c=d%2Ce")
+@end lisp
+
+Result:
+
+@example
+(("c" "d@comma{}e") ("a" "b"))
+@end example
 @end defun
 
-@defun restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT
+@defun restlib-url-add-query-items URL ITEMS &optional OBJ-RESULT SEMICOLONS KEEP-EMPTY
 @itemize
 @item
 URL: string or URL object
@@ -214,11 +281,29 @@ URL: string or URL object
 ITEMS: list of lists as specified for @code{url-build-query-string}
 @item
 OBJ-RESULT: if non-nil then return URL object@comma{} else string
+@item
+SEMICOLONS: if non-nil then use ‘;’ as separator
+@item
+KEEP-EMPTY: if non-nil then render ‘key=’ instead of ‘key’
 @end itemize
 
 Add query ITEMS to URL@.
 
 If URL has an existing query fragment@comma{} then ITEMS will be naively appended to it@comma{} with no regard for duplicate keys.
+
+Example:
+
+@lisp
+(restlib-url-add-query-items
+ "https://heythey.com/mary?a=b&c=d%2Ce"
+ '(("f" "j")))
+@end lisp
+
+Result:
+
+@example
+"https://heythey.com/mary?c=d@comma{}e&a=b&f=j"
+@end example
 @end defun
 
 @defun restlib-url-remove-query URL &optional OBJ-RESULT
@@ -230,6 +315,18 @@ OBJ-RESULT: if non-nil then return URL object
 @end itemize
 
 Remove query from URL@.
+
+Example:
+
+@lisp
+(restlib-url-remove-query "https://heythey.com/mary?a=b&c=d%2Ce")
+@end lisp
+
+Result:
+
+@example
+"https://heythey.com/mary"
+@end example
 @end defun
 
 @node JSON
@@ -239,8 +336,7 @@ Remove query from URL@.
 
 JSON-related functions. For more information on JSON objects@comma{} refer to the @ref{Parsing JSON,Parsing JSON section of the Elisp manual,,elisp,}.
 
-@table @asis
-@item restlib-json-empty-string-to-nil OBJ KEY
+@defun restlib-json-empty-string-to-nil OBJ KEY
 @itemize
 @item
 OBJ: map-type object (typically a @code{hash-table})
@@ -249,7 +345,7 @@ KEY: key
 @end itemize
 
 Convert empty string value for KEY to nil in OBJ@.
-@end table
+@end defun
 
 @node Example
 @chapter Example
