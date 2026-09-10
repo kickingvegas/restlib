@@ -35,7 +35,7 @@ As this project is new, [[https://github.com/kickingvegas/restlib/issues][feedba
 
 If you enjoy using *restlib*, please consider buying me a coffee to help support its development and maintenance.
 
-[[file:docs/images/default-yellow.png]]
+[[https://www.buymeacoffee.com/kickingvegas][file:docs/images/default-yellow.png]]
 
 
 * Acknowledgments
