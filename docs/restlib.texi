@@ -20,7 +20,7 @@ Copyright © 2026 Charles Y@. Choi
 @finalout
 @titlepage
 @title restlib API reference
-@subtitle for version 0.1.2-rc.1
+@subtitle for version 0.1.2
 @author Charles Y@. Choi (@email{kickingvegas@@gmail.com})
 @page
 @vskip 0pt plus 1filll
@@ -33,7 +33,7 @@ Copyright © 2026 Charles Y@. Choi
 @node Top
 @top restlib API Reference
 
-Version: 0.1.2-rc.1
+Version: 0.1.2
 
 Copyright © 2026 @w{Charles Y. Choi}
 
@@ -52,8 +52,6 @@ JSON handling
 
 
 If you enjoy using restlib@comma{} please consider buying me a coffee to help support its development and maintenance.
-
-@image{images/default-yellow,,,,png}
 
 @uref{https://www.buymeacoffee.com/kickingvegas}
 
@@ -369,8 +367,6 @@ To participate in general discussion about using @strong{restlib}@comma{} please
 @cindex Sponsorship
 
 If you enjoy using restlib@comma{} please consider buying me a coffee to help support its development and maintenance.
-
-@image{images/default-yellow,,,,png}
 
 @uref{https://www.buymeacoffee.com/kickingvegas}
 
