@@ -168,7 +168,7 @@ URL-related functions. For more information on URL objects refer to the [[info:u
   Result:
 
   #+begin_example
-   "a=b&c=d%20e"
+   "a=b&c=d%2Ce"
   #+end_example
 
 

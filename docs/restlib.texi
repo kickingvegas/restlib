@@ -244,7 +244,7 @@ Example:
 Result:
 
 @example
-"a=b&c=d%20e"
+"a=b&c=d%2Ce"
 @end example
 @end defun
 
