@@ -1,4 +1,4 @@
-# [[https://melpa.org/#/restlib][file:https://melpa.org/packages/restlib-badge.svg]] [[https://stable.melpa.org/#/restlib][file:https://stable.melpa.org/packages/restlib-badge.svg]]
+[[https://melpa.org/#/restlib][file:https://melpa.org/packages/restlib-badge.svg]] [[https://stable.melpa.org/#/restlib][file:https://stable.melpa.org/packages/restlib-badge.svg]]
 
 * restlib
 
