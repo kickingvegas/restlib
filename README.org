@@ -35,6 +35,8 @@ If you enjoy using *restlib*, please consider buying me a coffee to help support
 [[https://www.buymeacoffee.com/kickingvegas][http://yummymelon.com/devnull/theme/images/icons/buymecoffee.png]]
 
 
+Please star and share this project to others as well. Thank you!
+
 * Acknowledgments
 
 A heartfelt thanks to all the contributors to the GNU Emacs ecosystem from which *restlib* builds from. This work would not be possible without your efforts.
